@@ -18,13 +18,12 @@ export default (env, args) => {
             disableHostCheck: true,
             overlay: true,
             noInfo: true,
-            after: function (app, server, compiler) {
+            after: async (app, server, compiler) => {
                 const port = server.options.port
                 const https = server.options.https ? 's' : ''
-                const localIp = internalIpV4()
-                const domain1 = `http${https}://${localIp}:${port}`
+                const ipAddress = await internalIpV4()
+                const domain1 = `http${https}://${ipAddress}:${port}`
                 const domain2 = `http${https}://localhost:${port}`
-
                 console.log(`Project running at:\n  - ${domain1}\n  - ${domain2}`)
             }
         }
