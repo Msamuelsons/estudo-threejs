@@ -1,7 +1,11 @@
-import {internalIpV4} from 'internal-ip'
 import {merge} from 'webpack-merge'
 import {getPort} from 'portfinder-sync'
+import path from "path";
+import {fileURLToPath} from 'url';
+
 import {common} from './webpack.common.mjs'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default (env, args) => {
     return merge(common, {
@@ -10,22 +14,11 @@ export default (env, args) => {
         devServer: {
             host: '0.0.0.0',
             port: getPort(8080),
-            contentBase: './dist',
-            watchContentBase: true,
+            static: {
+                directory: path.join(__dirname, 'dist')
+            },
             open: true,
-            https: false,
-            useLocalIp: true,
-            disableHostCheck: true,
-            overlay: true,
-            noInfo: true,
-            after: async (app, server, compiler) => {
-                const port = server.options.port
-                const https = server.options.https ? 's' : ''
-                const ipAddress = await internalIpV4()
-                const domain1 = `http${https}://${ipAddress}:${port}`
-                const domain2 = `http${https}://localhost:${port}`
-                console.log(`Project running at:\n  - ${domain1}\n  - ${domain2}`)
-            }
+            https: false
         }
     })
 }
