@@ -13,6 +13,7 @@
         "prettier-write": "prettier --write './src/**/*.{ts,css,scss,html,json,js}'"
     },
     "dependencies": {
+        "gsap": "^3.11.5",
         "three": "^0.126.0"
     },
     "devDependencies": {

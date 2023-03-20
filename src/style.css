@@ -3,13 +3,13 @@
     padding: 0;
 }
 
-html,
 body {
+    width: 100vw;
     height: 100vh;
-    font-family: 'Poppins';
 }
 
-.webgl {
+
+.draw {
     position: fixed;
     top: 0;
     left: 0;
