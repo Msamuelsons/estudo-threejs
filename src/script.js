@@ -1,2 +1,2 @@
 import "./style.css"
-import "./responsive"
+import "./orbitControl"
