@@ -1,23 +1,15 @@
 import "./style.css"
 import * as THREE from "three"
 import { MapControls, OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import * as dat from "dat.gui"
 
-//Scene
 const scene = new THREE.Scene()
 
-// Lighs
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-const pointLight = new THREE.PointLight(0xffffff, 0.5)
-pointLight.position.set(2, 2, 2)
-scene.add(ambientLight, pointLight)
-
-// TextureLoader
-const textureLoader = new THREE.TextureLoader()
-const colorTexture = textureLoader.load("/texture/color.jpg")
-const matcapTexture = textureLoader.load("/texture/mat2.png")
-const bumbTexture = textureLoader.load("/texture/bump.jpg")
-
-const displacementTexture = textureLoader.load("/texture/displacementMap.jpg")
+// Debugging
+const gui = new dat.GUI()
+const materialColor = {
+    color: 0xffffff,
+}
 
 //Resizing
 window.addEventListener("resize", () => {
@@ -35,25 +27,20 @@ window.addEventListener("resize", () => {
 })
 
 //Mesh
-const geometry = new THREE.PlaneBufferGeometry(1, 1, 12, 12)
+const geometry = new THREE.PlaneBufferGeometry(1, 1)
 
-const material = new THREE.MeshStandardMaterial()
-//material.wireframe = true => Deixa com a formação de triângulos
-//material.color = new THREE.Color("skyblue")
-//material.transparent = true
-//material.opacity = 0.4
-//material.matcap = matcapTexture
+const material = new THREE.MeshBasicMaterial({ color: "red" })
 material.side = THREE.DoubleSide
-//material.shininess = 200
-//material.specular = new THREE.Color("green")
-//material.metalness = 0.35
-//material.roughness = 0.5
-material.map = colorTexture
-material.displacementMap = displacementTexture
-//material.bumpMap = bumbTexture
+
 const mesh = new THREE.Mesh(geometry, material)
 
 scene.add(mesh)
+gui.add(mesh.position, "x").min(-3).max(3)
+gui.add(material, "wireframe")
+gui.addColor(materialColor, "color").onChange(() => {
+    material.color.set(materialColor.color)
+})
+
 //Camera
 const aspect = {
     width: window.innerWidth,

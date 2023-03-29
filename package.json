@@ -13,6 +13,7 @@
         "prettier-write": "prettier --write './src/**/*.{ts,css,scss,html,json,js}'"
     },
     "dependencies": {
+        "dat.gui": "^0.7.9",
         "gsap": "^3.11.5",
         "three": "^0.126.0"
     },
