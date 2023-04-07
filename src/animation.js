@@ -2,27 +2,30 @@ import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader"
 import * as dat from "dat.gui"
 
 //Scene
 const scene = new THREE.Scene()
 
 // Light
-const light = new THREE.AmbientLight(0xffffff, 0.1)
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8)
+const light = new THREE.AmbientLight(0xffffff, 1.1)
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
 directionalLight.position.z = 2
 scene.add(directionalLight, light)
 
-// GLTFLoader
-const gltfloader = new GLTFLoader()
+// FBX
+const fbxloader = new FBXLoader()
 
 // Load GLTFLoader
 let animationMixer = null
-gltfloader.load("models/animatedCube.glb", function (glb) {
-    animationMixer = new THREE.AnimationMixer(glb.scene)
-    const clipAction = animationMixer.clipAction(glb.animations[0])
+fbxloader.load("models/Jumping.fbx", function (fbx) {
+    animationMixer = new THREE.AnimationMixer(fbx)
+    const clipAction = animationMixer.clipAction(fbx.animations[0])
+    fbx.position.y = -0.8
+    fbx.scale.set(0.01, 0.01, 0.01)
     clipAction.play()
-    scene.add(glb.scene)
+    scene.add(fbx)
 })
 
 //Debugging

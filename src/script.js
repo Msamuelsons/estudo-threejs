@@ -1,2 +1,2 @@
 import "./style.css"
-import "./models-gltf"
+import "./animation"
